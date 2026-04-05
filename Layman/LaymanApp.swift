@@ -1,17 +1,19 @@
-//
-//  LaymanApp.swift
-//  Layman
-//
-//  Created by Kartik Gaur on 05/04/26.
-//
-
 import SwiftUI
 
 @main
 struct LaymanApp: App {
+    @StateObject private var authVM = AuthViewModel()
+    @State private var showAuth = false
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if authVM.isLoggedIn {
+                MainTabView(authVM: authVM)
+            } else if showAuth {
+                AuthView(authVM: authVM)
+            } else {
+                WelcomeView(showAuth: $showAuth)
+            }
         }
     }
 }
